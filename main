@@ -1,0 +1,225 @@
+from random import randint
+from bke import EvaluationAgent, start, validate
+
+class mybestagent(EvaluationAgent):
+    def evaluate(self, board, my_symbol, opponent_symbol):
+        waarde = 0
+        p = 1# int(randint(0, 8))
+        for tel in range (len(board)):
+            if board[tel] == my_symbol:
+                
+                first = 0
+                for r in range (len(board)):
+                    if board[r] == opponent_symbol or board[r] == my_symbol:
+                        first += 1
+                if first == 1 and p == tel:
+                    waarde += 100
+                elif first == 2 and ((tel == 0 and (board.index(opponent_symbol) == 1 or board.index(opponent_symbol) == 3)) or (tel == 8 and (board.index(opponent_symbol) == 5 or board.index(opponent_symbol) == 7))):
+                    waarde += 100
+                elif first == 5 and (board ==[opponent_symbol,' ',my_symbol,my_symbol,my_symbol,opponent_symbol,' ',' ',' '] or board ==[' ',' ',' ',my_symbol,my_symbol,opponent_symbol,opponent_symbol,' ',my_symbol] or board ==[my_symbol,' ',opponent_symbol,opponent_symbol,my_symbol,my_symbol,' ',' ',' '] or board ==[' ',' ',' ',opponent_symbol,my_symbol,my_symbol,my_symbol,' ',opponent_symbol] or board ==[' ', opponent_symbol, ' ', ' ', my_symbol, ' ', opponent_symbol, my_symbol, my_symbol] or board ==[' ', opponent_symbol, ' ', ' ', my_symbol, ' ', my_symbol, my_symbol, opponent_symbol] or board ==[opponent_symbol,my_symbol , my_symbol, ' ', my_symbol, ' ', ' ', opponent_symbol, ' '] or board ==[my_symbol,my_symbol , opponent_symbol, ' ', my_symbol, ' ', ' ', opponent_symbol, ' ']):
+                        waarde += 1000
+                if tel == 4:
+                    waarde += 50
+                if tel == 0 or tel == 3 or tel == 6:
+                    if board[tel+1] == opponent_symbol == board[tel+2]:
+                        waarde += 50
+                    elif board[tel+1] == my_symbol == board[tel+2]:
+                        waarde += 1000
+                    else:
+                        if board[tel+1] == opponent_symbol:
+                            waarde -= 6
+                        elif board[tel+1] == my_symbol:
+                            waarde += 5
+                        if board[tel+2] == my_symbol:
+                            waarde += 5
+                        elif board[tel+2] == opponent_symbol:
+                            waarde -= 6  
+                        if board[tel+1] == ' ' or board[tel+2] == ' ':
+                            waarde += 1
+                elif tel == 2 or tel == 5 or tel == 8:
+                    if board[tel-1] == opponent_symbol == board[tel-2]:
+                        waarde += 50
+                    elif board[tel-1] == my_symbol == board[tel-2]:
+                        waarde += 1000
+                    else:
+                        if board[tel-1] == opponent_symbol:
+                            waarde -= 6
+                        elif board[tel-1] == my_symbol:
+                            waarde += 5
+                        if board[tel-2] == my_symbol:
+                            waarde += 5
+                        elif board[tel-2] == opponent_symbol:
+                            waarde -= 6
+                        if board[tel-2] == ' ' or board[tel-1] == ' ':
+                            waarde += 1
+                elif tel == 1 or tel == 4 or tel == 7:
+                    if board[tel+1] == opponent_symbol == board[tel-1]:
+                        waarde += 50
+                    elif board[tel+1] == my_symbol == board[tel-1]:
+                        waarde += 1000
+                    else:
+                        if  board[tel+1] == opponent_symbol: 
+                            waarde -= 6
+                        elif board[tel+1] == my_symbol:
+                            waarde += 5
+                        if board[tel-1] == my_symbol:
+                            waarde += 5
+                        elif board[tel-1] == opponent_symbol:
+                            waarde -= 6  
+                        if board[tel-1] == ' ' or board[tel+1] == ' ':
+                            waarde += 1
+                if tel == 0 or tel == 1 or tel == 2:
+                    if board[tel+3] == opponent_symbol == board[tel+6]:
+                        waarde += 50
+                    elif board[tel+3] == my_symbol == board[tel+6]:
+                        waarde += 1000
+                    else:
+                        if board[tel+3] == opponent_symbol:
+                            waarde -= 6
+                        elif board[tel+3] == my_symbol:
+                            waarde += 5
+                        if board[tel+6] == my_symbol:
+                            waarde += 5
+                        elif board[tel+6] == opponent_symbol:
+                            waarde -= 6
+                        if board[tel+3] == ' ' or board[tel+6] == ' ':
+                            waarde += 1
+                elif tel == 6 or tel == 7 or tel == 8:
+                    if board[tel-3] == opponent_symbol == board[tel-6]:
+                        waarde += 50
+                    elif board[tel-3] == my_symbol == board[tel-6]: 
+                        waarde += 1000
+                    else:
+                        if board[tel-3] == opponent_symbol:
+                            waarde -= 6
+                        elif board[tel-3] == my_symbol:
+                            waarde += 5
+                        if board[tel-6] == my_symbol:
+                            waarde += 5
+                        elif board[tel-6] == opponent_symbol:
+                            waarde -= 6
+                        if board[tel-3] == ' ' or board[tel-6] == ' ':
+                            waarde += 1
+                elif tel == 3 or tel == 4 or tel == 5:
+                    if board[tel+3] == opponent_symbol == board[tel-3]:
+                        waarde += 50
+                    elif board[tel+3] == my_symbol == board[tel-3]:
+                        waarde += 1000
+                    else:
+                        if board[tel+3] == opponent_symbol:
+                            waarde -= 6
+                        elif board[tel+3] == my_symbol:
+                            waarde += 5
+                        if board[tel-3] == my_symbol:
+                            waarde += 5
+                        elif board[tel-3] == opponent_symbol:
+                            waarde -= 6
+                        if board[tel-3] == ' ' or board[tel+3] == ' ':
+                            waarde += 1
+
+                if tel == 0:
+                    waarde += 5
+                    if board[4] == opponent_symbol == board[8]:
+                        waarde += 50
+                    elif board[4] == my_symbol == board[8]:
+                        waarde += 1000
+                    else:
+                        if board[4] == opponent_symbol:
+                            waarde -= 6
+                        elif board[4] == my_symbol:
+                            waarde += 5
+                        if board[8] == my_symbol:
+                            waarde += 5
+                        elif board[8] == opponent_symbol:
+                            waarde -= 6
+                        if board[4] == ' ' or board[8] == ' ':
+                            waarde += 1
+                if tel == 4:
+                    if board[0] == opponent_symbol == board[8]:
+                        waarde += 50
+                    elif board[0] == my_symbol == board[8]:
+                        waarde += 1000
+                    else:
+                        if board[0] == opponent_symbol:
+                            waarde -= 6
+                        elif board[0] == my_symbol:
+                            waarde += 5
+                        if board[8] == my_symbol:
+                            waarde += 5
+                        elif board[8] == opponent_symbol:
+                            waarde -= 6
+                        if board[0] == ' ' or board[8] == ' ':
+                            waarde += 1
+                    if board[2] == opponent_symbol == board[6]:
+                        waarde += 50
+                    elif board[2] == my_symbol == board[6]:
+                        waarde += 1000
+                    else:
+                        if board[2] == opponent_symbol:
+                            waarde -=6
+                        elif board[2] == my_symbol:
+                            waarde += 5
+                        if board[6] == my_symbol:
+                            waarde += 5
+                        elif board[6] == opponent_symbol:
+                            waarde -= 6
+                        if board[2] == ' ' or board[6] == ' ':
+                            waarde += 1
+                if tel == 8:
+                    waarde += 5
+                    if board[4] == opponent_symbol == board[0]:
+                        waarde += 50
+                    elif board[4] == my_symbol == board[0]:
+                        waarde += 1000
+                    else:
+                        if board[4] == opponent_symbol:
+                            waarde -=6
+                        elif board[4] == my_symbol:
+                            waarde += 5
+                        if board[0] == my_symbol:
+                            waarde += 5
+                        elif board[0] == opponent_symbol:
+                            waarde -= 6
+                        if board[0] == ' ' or board[4] == ' ':
+                            waarde += 1
+                if tel == 2:
+                    waarde += 5
+                    if board[4] == opponent_symbol == board[6]:
+                        waarde += 50
+                    elif board[4] == my_symbol == board[6]:
+                        waarde += 1000
+                    else:
+                        if board[4] == opponent_symbol:
+                            waarde -=6
+                        elif board[4] == my_symbol:
+                            waarde += 5
+                        if board[6] == my_symbol:
+                            waarde += 5
+                        elif board[6] == opponent_symbol:
+                            waarde -= 6
+                        if board[6] == ' ' or board[4] == ' ':
+                            waarde += 1
+                if tel == 6:
+                    waarde += 5
+                    if board[4] == opponent_symbol == board[2]:
+                        waarde += 50
+                    elif board[4] == my_symbol == board[2]:
+                        waarde += 1000
+                    else:
+                        if board[4] == opponent_symbol:
+                            waarde -=6
+                        elif board[4] == my_symbol:
+                            waarde += 5                        
+                        if board[2] == my_symbol:
+                            waarde += 5
+                        elif board[2] == opponent_symbol:
+                            waarde -= 6
+                        if board[2] == ' ' or board[4] == ' ':
+                            waarde += 1
+        return waarde
+
+agent_1 = mybestagent()
+agent_2 = mybestagent()
+start(agent_1, agent_2)
+#validation_result = validate(agent_x=agent_1, agent_o=agent_2, iterations=100000)
+#print(validation_result)
